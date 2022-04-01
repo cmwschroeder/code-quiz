@@ -1,0 +1,32 @@
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+#intro {
+    text-align: center;
+}
+
+#intro h2 {
+    font-size: 36px;
+}
+
+#intro p {
+    margin-left: 25%;
+    margin-right: 25%;
+    font-size: 18px;
+}
+
+#intro button {
+    font-size: 18px;
+    color: white;
+    background-color: purple;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
