@@ -13,6 +13,10 @@ Description
 
 ## Technologies
 
+HTML/CSS/Javascript
+
 ## Link
+
+https://cmwschroeder.github.io/code-quiz/
 
 ## Screenshots
