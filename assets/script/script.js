@@ -17,6 +17,8 @@ var questionsAsked;
 var score = 0;
 var correctAns;
 var unusedButtons = [];
+var gameOn = false;
+var timeLeft;
 
 var quiz = [
     {
@@ -73,13 +75,14 @@ var quiz = [
 
 var currentQuiz = [];
 
-
-var timeLeft = 60;
-
 function countdown() {
     var timeInterval = setInterval(function() {
-        if(timeLeft >= 1) {
+        if(gameOn && timeLeft >= 1) {
             timerEl.textContent = "Timer: " + timeLeft;
+        } else if(gameOn) {
+            timerEl.textContent = "Timer: 0";
+            clearInterval(timeInterval);
+            gameOver();
         }
         else {
             timerEl.textContent = "Timer: 0";
@@ -91,8 +94,10 @@ function countdown() {
 };
 
 startEl.addEventListener("click", function() {
+    timeLeft = 10;
     questionsAsked = 0;
     currentQuiz = quiz;
+    gameOn = true;
     introEl.setAttribute("style", "display: none;");
     quizEl.setAttribute("style", "display: flex");
     selectQuestion();
@@ -162,11 +167,16 @@ function gradeQuestion(answer) {
     if(currentQuiz.length != 0) {
         selectQuestion();
     } else {
-        quizEl.setAttribute("style", "display: none");
-        scoreEl.textContent = ("Score: " + score);
-        endGame.setAttribute("style", "display: initial");
+        gameOn = false;
+        gameOver();
     }
-}
+};
+
+function gameOver() {
+    quizEl.setAttribute("style", "display: none");
+    scoreEl.textContent = ("Score: " + score);
+    endGame.setAttribute("style", "display: initial");
+};
 
 function displayHighscore() {
 
