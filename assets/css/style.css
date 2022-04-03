@@ -12,7 +12,7 @@ h1 {
     text-align: center;
 }
 
-#intro h2 {
+h2, h3 {
     font-size: 36px;
 }
 
@@ -22,11 +22,18 @@ h1 {
     font-size: 18px;
 }
 
-#intro button {
+button {
     font-size: 18px;
     color: white;
     background-color: purple;
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
+}
+
+#quiz-questions {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
