@@ -2,8 +2,10 @@
 var timerEl = document.getElementById("timer");
 var startEl = document.querySelector("#start");
 var introEl = document.querySelector("#intro");
-
 var quizEl = document.querySelector("#quiz-questions");
+var endGame = document.querySelector("#end-game");
+var scoreEl = document.querySelector("#score");
+
 var questNumEl = document.querySelector("#questions-asked");
 var questEl = document.querySelector("#question");
 var ans1El = document.querySelector("#ans-one");
@@ -14,7 +16,7 @@ var ans4El = document.querySelector("#ans-four");
 var questionsAsked;
 var score = 0;
 var correctAns;
-var unusedButtons = [1, 2, 3, 4];
+var unusedButtons = [];
 
 var quiz = [
     {
@@ -98,6 +100,7 @@ startEl.addEventListener("click", function() {
 });
 
 function selectQuestion() {
+    unusedButtons = [1, 2, 3, 4];
     questionsAsked++;
     var selected = Math.floor(Math.random() * currentQuiz.length);
 
@@ -117,7 +120,6 @@ function selectQuestion() {
         unusedButtons.splice(selButton, 1);
     }
 
-
     currentQuiz.splice(selected, 1);
 };
 
@@ -131,6 +133,38 @@ function setButton(answer, buttonNum) {
         ans3El.textContent = answer;
     } else {
         ans4El.textContent = answer;
+    }
+}
+
+ans1El.addEventListener("click", function() {
+    gradeQuestion(1);
+});
+
+ans2El.addEventListener("click", function() {
+    gradeQuestion(2);
+});
+
+ans3El.addEventListener("click", function() {
+    gradeQuestion(3);
+});
+
+ans4El.addEventListener("click", function() {
+    gradeQuestion(4);
+});
+
+function gradeQuestion(answer) {
+    if(correctAns == answer) {
+        score++;
+    } else {
+        timeLeft = timeLeft - 5;
+    };
+
+    if(currentQuiz.length != 0) {
+        selectQuestion();
+    } else {
+        quizEl.setAttribute("style", "display: none");
+        scoreEl.textContent = ("Score: " + score);
+        endGame.setAttribute("style", "display: initial");
     }
 }
 
