@@ -4,15 +4,17 @@ var startEl = document.querySelector("#start");
 var introEl = document.querySelector("#intro");
 
 var quizEl = document.querySelector("#quiz-questions");
+var questNumEl = document.querySelector("#questions-asked");
 var questEl = document.querySelector("#question");
 var ans1El = document.querySelector("#ans-one");
 var ans2El = document.querySelector("#ans-two");
 var ans3El = document.querySelector("#ans-three");
 var ans4El = document.querySelector("#ans-four");
 
+var questionsAsked;
 var score = 0;
 var correctAns;
-
+var unusedButtons = [1, 2, 3, 4];
 
 var quiz = [
     {
@@ -33,7 +35,7 @@ var quiz = [
     {
         question: "What does HTML stand for?",
         correctAnswer: "Hypertext Markup Language",
-        incorrectAnswer: ["Hyperload Markup Language", "Howtoload Markup Language", "None of the above"]
+        incorrectAnswer: ["Hyperload Markup Language", "Howtoload Markup Language", "None of these"]
     },
     {
         question: "What tag would you use to attach a stylesheet to the HTML page?",
@@ -53,7 +55,7 @@ var quiz = [
     {
         question: "What letter is most commonly used as the iterator in a for loop?",
         correctAnswer: "i",
-        inccorrectAnswer: ["x", "j", "a"]
+        incorrectAnswer: ["x", "j", "a"]
     },
     {
         question: "What does || mean in a conditional statement?",
@@ -66,6 +68,8 @@ var quiz = [
         incorrectAnswer: ["So that the image has background text", "For the programmer to know what the image is about", "For styling purposes"]
     }
 ];
+
+var currentQuiz = [];
 
 
 var timeLeft = 60;
@@ -85,6 +89,8 @@ function countdown() {
 };
 
 startEl.addEventListener("click", function() {
+    questionsAsked = 0;
+    currentQuiz = quiz;
     introEl.setAttribute("style", "display: none;");
     quizEl.setAttribute("style", "display: flex");
     selectQuestion();
@@ -92,7 +98,40 @@ startEl.addEventListener("click", function() {
 });
 
 function selectQuestion() {
+    questionsAsked++;
+    var selected = Math.floor(Math.random() * currentQuiz.length);
 
+    questNumEl.textContent = ("Question: " + questionsAsked);
+    questEl.textContent = currentQuiz[selected].question;
+
+    // selects a random answer choice and sets that as the correct Answer, passes
+    //to setButton to set the text for that button
+    var selButton = Math.floor(Math.random() * unusedButtons.length);
+    correctAns = unusedButtons[selButton];
+    setButton(currentQuiz[selected].correctAnswer, unusedButtons[selButton]);
+    unusedButtons.splice(selButton, 1);
+
+    for(var i = 0; i < 3; i++) {
+        selButton = selButton = Math.floor(Math.random() * unusedButtons.length);
+        setButton(currentQuiz[selected].incorrectAnswer[i], unusedButtons[selButton]);
+        unusedButtons.splice(selButton, 1);
+    }
+
+
+    currentQuiz.splice(selected, 1);
+};
+
+// sets the text content for the button that is passed in
+function setButton(answer, buttonNum) {
+    if(buttonNum === 1) {
+        ans1El.textContent = answer;
+    } else if(buttonNum === 2) {
+        ans2El.textContent = answer;
+    } else if(buttonNum === 3) {
+        ans3El.textContent = answer;
+    } else {
+        ans4El.textContent = answer;
+    }
 }
 
 function displayHighscore() {
