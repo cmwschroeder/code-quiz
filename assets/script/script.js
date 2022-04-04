@@ -87,16 +87,23 @@ var quiz = [
 //variable to hold the quiz so that we can remove quiz questions that have been asked
 var currentQuiz = [];
 
+/*
+ * Handles the timer for the quiz
+ */
 function countdown() {
     var timeInterval = setInterval(function() {
+        //counts down if the game is ongoing and the timer still has time left
         if(gameOn && timeLeft >= 1) {
             timerEl.textContent = "Timer: " + timeLeft;
-        } else if(gameOn) {
+        }
+        //if the game is still going but the timer has run out then we will end the game 
+        else if(gameOn) {
             timerEl.textContent = "Timer: 0";
             clearInterval(timeInterval);
             gameOn = false;
             gameOver();
         }
+        // sets the timer to 0 because we have run out of questions and the game is over
         else {
             timerEl.textContent = "Timer: 0";
             clearInterval(timeInterval);
@@ -105,13 +112,19 @@ function countdown() {
     }, 1000);
 };
 
+/*
+ * Starts the quiz, handles all the logic that needs to be reset at game start, as well
+ * hides the intro section and displays the quiz section. Selects a question and begins countdown
+ */
 startEl.addEventListener("click", function() {
+    //time that is given to take the quiz
     timeLeft = 30;
     questionsAsked = 0;
+    //copies the quiz questions into a different array of objects so that we can have
+    //multiple quizzes without reloading the page
     for(var i = 0; i < quiz.length; i++) {
         currentQuiz[i] = quiz[i];
     }
-    console.log(currentQuiz);
     gameOn = true;
     score = 0;
     introEl.setAttribute("style", "display: none;");
@@ -120,9 +133,14 @@ startEl.addEventListener("click", function() {
     countdown();
 });
 
+/*
+ * Selects a question from the quiz questions, populates the buttons randomly so that
+ * the answers will not be in the same spot when the question is asked multiple times
+ */
 function selectQuestion() {
     unusedButtons = [1, 2, 3, 4];
     questionsAsked++;
+    //Selets a random question from the remaining questions
     var selected = Math.floor(Math.random() * currentQuiz.length);
 
     questNumEl.textContent = ("Question: " + questionsAsked);
@@ -135,16 +153,20 @@ function selectQuestion() {
     setButton(currentQuiz[selected].correctAnswer, unusedButtons[selButton]);
     unusedButtons.splice(selButton, 1);
 
+    //randomly populates the rest of the buttons with the wrong answers
     for(var i = 0; i < 3; i++) {
         selButton = selButton = Math.floor(Math.random() * unusedButtons.length);
         setButton(currentQuiz[selected].incorrectAnswer[i], unusedButtons[selButton]);
         unusedButtons.splice(selButton, 1);
     }
 
+    //removes question from quiz questions so that it can't be asked again
     currentQuiz.splice(selected, 1);
 };
 
-// sets the text content for the button that is passed in
+/*
+ * sets the text content for the button that is passed in
+ */
 function setButton(answer, buttonNum) {
     if(buttonNum === 1) {
         ans1El.textContent = answer;
@@ -157,29 +179,37 @@ function setButton(answer, buttonNum) {
     }
 }
 
+/*
+ * Event listeners for the buttons, sends the grade question
+ * function the info telling what button was pressed
+ */
 ans1El.addEventListener("click", function() {
     gradeQuestion(1);
 });
-
 ans2El.addEventListener("click", function() {
     gradeQuestion(2);
 });
-
 ans3El.addEventListener("click", function() {
     gradeQuestion(3);
 });
-
 ans4El.addEventListener("click", function() {
     gradeQuestion(4);
 });
 
+/*
+ * Checks if the question was answered correctly or incorrectly, calls the select question
+ * function if there are more questions to pick from, if not then it will end the game
+ */
 function gradeQuestion(answer) {
+    //checks if question was answered correctly, if it was then increment score, if not
+    //minus time from the timer
     if(correctAns == answer) {
         score++;
     } else {
         timeLeft = timeLeft - 10;
     };
 
+    //ends game if there are no questions left
     if(currentQuiz.length != 0) {
         selectQuestion();
     } else {
@@ -188,12 +218,19 @@ function gradeQuestion(answer) {
     }
 };
 
+/*
+ * Displays the end of the game screen that shows score and allows you to put in your initals to save your highscore
+ */
 function gameOver() {
     quizEl.setAttribute("style", "display: none");
     scoreEl.textContent = ("Score: " + score);
     endGame.setAttribute("style", "display: flex");
 };
 
+/*
+ * Handles the grabbing of the initials and passes it to the store highscore function
+ * hides the end game section and displays highscores
+ */
 subButtonEl.addEventListener("click", function() {
     if(initialsEl.value != "") {
         var newInitials = initialsEl.value;

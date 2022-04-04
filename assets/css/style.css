@@ -1,13 +1,16 @@
+/* Styles the header, sets as flex display so that the highscore button and timere will be on same line */
 header {
     display: flex;
     justify-content: space-between;
 }
 
+/* Styles the h1's in the header */
 h1 {
     margin: 0;
     font-size: 26px;
 }
 
+/* Sets display settings for the intro to the quiz, since it will be shown at the beginning the display is not set to none */
 #intro {
     display: flex;
     justify-content: center;
@@ -16,16 +19,19 @@ h1 {
     text-align: center;
 }
 
-h2, h3, h4 {
+/* Sets font size for h2 */
+h2 {
     font-size: 36px;
 }
 
+/* Styles the text for all p tags */
 p {
     margin-left: 25%;
     margin-right: 25%;
     font-size: 18px;
 }
 
+/* Makes the buttons look a bit better than default */
 button {
     font-size: 18px;
     color: white;
@@ -34,9 +40,11 @@ button {
     border-radius: 20px;
 }
 
+/* Sets the same dispaly settings as the intro but these won't be shown on page load */
 #quiz-questions, #end-game, #highscores {
     display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
 }
