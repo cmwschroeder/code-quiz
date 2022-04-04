@@ -48,3 +48,8 @@ button {
     flex-direction: column;
     text-align: center;
 }
+
+/* Make the font size of the li font bigger */
+li {
+    font-size: 20px;
+}
