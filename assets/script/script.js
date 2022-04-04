@@ -6,7 +6,6 @@ var quizEl = document.querySelector("#quiz-questions");
 var endGame = document.querySelector("#end-game");
 var scoreEl = document.querySelector("#score");
 var initialsEl = document.querySelector("#initials");
-var subButtonEl = document.querySelector("#submit");
 var highscoreEl = document.querySelector("#highscores");
 var highscoreListEl = document.querySelector("#entered-highscores");
 var questNumEl = document.querySelector("#questions-asked");
@@ -17,8 +16,10 @@ var ans1El = document.querySelector("#ans-one");
 var ans2El = document.querySelector("#ans-two");
 var ans3El = document.querySelector("#ans-three");
 var ans4El = document.querySelector("#ans-four");
+var subButtonEl = document.querySelector("#submit");
 var restartButton = document.querySelector("#restart");
 var clearButton = document.querySelector("#clear");
+var displayHighscoresButton = document.querySelector("#display");
 
 //variables that will hold info used in the logic of the quiz
 //and displaying the highscores
@@ -295,4 +296,16 @@ clearButton.addEventListener("click", function() {
 restartButton.addEventListener("click", function() {
     highscoreEl.setAttribute("style", "display: none");
     introEl.setAttribute("style", "display: flex;");
+});
+
+/*
+ * Will end the game if it is on, hide everything but the highscores
+ */
+displayHighscoresButton.addEventListener("click", function() {
+    introEl.setAttribute("style", "display: none;");
+    endGame.setAttribute("style", "display: none");
+    highscoreEl.setAttribute("style", "display: flex");
+    quizEl.setAttribute("style", "display: none");
+    gameOn = false;
+    displayHighscore();
 });
