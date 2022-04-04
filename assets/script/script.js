@@ -9,8 +9,9 @@ var initialsEl = document.querySelector("#initials");
 var subButtonEl = document.querySelector("#submit");
 var highscoreEl = document.querySelector("#highscores");
 var highscoreListEl = document.querySelector("#entered-highscores");
-
 var questNumEl = document.querySelector("#questions-asked");
+
+//variables that hold info on the buttons
 var questEl = document.querySelector("#question");
 var ans1El = document.querySelector("#ans-one");
 var ans2El = document.querySelector("#ans-two");
@@ -19,6 +20,8 @@ var ans4El = document.querySelector("#ans-four");
 var restartButton = document.querySelector("#restart");
 var clearButton = document.querySelector("#clear");
 
+//variables that will hold info used in the logic of the quiz
+//and displaying the highscores
 var questionsAsked;
 var score = 0;
 var correctAns;
@@ -26,8 +29,7 @@ var unusedButtons = [];
 var gameOn = false;
 var timeLeft;
 
-var allScores = [];
-
+// An array of objects that hold the questions and answers as well as wrong answers for the quiz
 var quiz = [
     {
         question: "Which tag would you use to redirect the user to another page when clicked?",
@@ -81,6 +83,7 @@ var quiz = [
     }
 ];
 
+//variable to hold the quiz so that we can remove quiz questions that have been asked
 var currentQuiz = [];
 
 function countdown() {
@@ -90,6 +93,7 @@ function countdown() {
         } else if(gameOn) {
             timerEl.textContent = "Timer: 0";
             clearInterval(timeInterval);
+            gameOn = false;
             gameOver();
         }
         else {
@@ -101,10 +105,14 @@ function countdown() {
 };
 
 startEl.addEventListener("click", function() {
-    timeLeft = 10;
+    timeLeft = 30;
     questionsAsked = 0;
-    currentQuiz = quiz;
+    for(var i = 0; i < quiz.length; i++) {
+        currentQuiz[i] = quiz[i];
+    }
+    console.log(currentQuiz);
     gameOn = true;
+    score = 0;
     introEl.setAttribute("style", "display: none;");
     quizEl.setAttribute("style", "display: flex");
     selectQuestion();
@@ -202,19 +210,38 @@ subButtonEl.addEventListener("click", function() {
  * Stores the new score being added into the local Storage
  */
 function addToHighscore(newInitials) {
+    var stored = false;
+    //create an object that will hold the current highscore being added
     var newScore = {
         highscore: score,
         initials: newInitials
     };
+    // get the array of objects that hold past highscores
     var toStore = JSON.parse(localStorage.getItem('pastScores'));
+
+    //if the user has never played then we need to create a local variable for them
     if(toStore == null) {
         toStore = [];
     }
+
+    // if we have no scores then we don't need to store based on highest score
     if(toStore.length == 0) {
         toStore[0] = newScore;
-    } else {
-        toStore[toStore.length] = newScore;
+        stored = true;
     }
+    // We do have scores so we need to put this highscore in the spot that makes the most sense 
+    else {
+        for(var i = 0; i < toStore.length; i++) {
+            if(toStore[i].highscore < newScore.highscore && !stored) {
+                toStore.splice(i, 0, newScore);
+                stored = true;
+            }
+        }
+        if(!stored) {
+            toStore[toStore.length] = newScore;
+        }
+    }
+    //store the new score list in local storage
     localStorage.setItem("pastScores", JSON.stringify(toStore));
 };
 
@@ -227,6 +254,11 @@ function displayHighscore() {
 
     //now we get the list of scores from the local storage
     var currentListScore = JSON.parse(localStorage.getItem("pastScores"));
+
+    //in case we are trying to display highscores for someone that has never played the code quiz yet
+    if(currentListScore == null) {
+        currentListScore = [];
+    }
 
     //run through a for loop getting each past score and making a li to add to ul
     for(var i = 0; i < currentListScore.length; i++) {
@@ -255,4 +287,12 @@ clearButton.addEventListener("click", function() {
     var emptyArray = [];
     localStorage.setItem("pastScores", JSON.stringify(emptyArray));
     displayHighscore();
+});
+
+/*
+ * Will restart the quiz at the beginning
+ */
+restartButton.addEventListener("click", function() {
+    highscoreEl.setAttribute("style", "display: none");
+    introEl.setAttribute("style", "display: flex;");
 });

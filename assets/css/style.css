@@ -9,6 +9,10 @@ h1 {
 }
 
 #intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -30,21 +34,7 @@ button {
     border-radius: 20px;
 }
 
-#quiz-questions {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-#end-game {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-#highscores {
+#quiz-questions, #end-game, #highscores {
     display: none;
     justify-content: center;
     align-items: center;
