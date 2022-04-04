@@ -20,3 +20,24 @@ HTML/CSS/Javascript
 https://cmwschroeder.github.io/code-quiz/
 
 ## Usage
+
+First you will load into the intro page:  
+![Intro page](https://github.com/cmwschroeder/code-quiz/blob/main/assets/images/intro-screenshot.png)  
+
+After you click on the begin button you will be sent to the first question:  
+![First question](https://github.com/cmwschroeder/code-quiz/blob/main/assets/images/first-question-screenshot.png)  
+
+When you get the question right you will be directed to the second question:  
+![Second question](https://github.com/cmwschroeder/code-quiz/blob/main/assets/images/second-question-screenshot.png)  
+
+Be careful, if you get the question wrong your time will take a hit:  
+![Third question with much less time](https://github.com/cmwschroeder/code-quiz/blob/main/assets/images/third-question-screenshot.png)  
+
+After you answer all the questions or run out of time you will be given a form to fill in your initials to save your score on the highscore list:  
+![Page showing a form to enter initials and submit](https://github.com/cmwschroeder/code-quiz/blob/main/assets/images/save-highscore-screenshot.png)  
+
+After you submit you will be taken to the highscores page, alternatively you can get to this page at any time through the "display highscores" button:  
+![Highscores page](https://github.com/cmwschroeder/code-quiz/blob/main/assets/images/display-highscores-screenshot.png)  
+
+You have the option on this page to clear your highscores:  
+![Highscores page with no highscores](https://github.com/cmwschroeder/code-quiz/blob/main/assets/images/clear-highscores-screenshot.png)
