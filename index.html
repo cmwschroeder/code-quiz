@@ -23,7 +23,7 @@
       </section>
 
       <section id="quiz-questions">
-        <h3 id="questions-asked"></h3>
+        <h2 id="questions-asked"></h2>
         <p id="question"></p>
         <button id="ans-one"></button>
         <br />
@@ -35,7 +35,21 @@
       </section>
 
       <section id="end-game">
-        <h4 id="score"></h4>
+        <h2>Game Over</h2>
+        <p id="score"></p>
+        <form>
+          <label for="initials">Enter initials: </label>
+          <input type="text" id="initials" name="initials">
+          <br><br>
+        </form>
+        <button id="submit">Submit</button>
+      </section>
+
+      <section id="highscores">
+        <h2></h2>
+        <ul id="entered-highscores"></ul>
+        <button>Go Back</button>
+        <button>Clear Highscores</button>
       </section>
 
       <script src="./assets/script/script.js"></script>

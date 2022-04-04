@@ -26,7 +26,6 @@ button {
     font-size: 18px;
     color: white;
     background-color: purple;
-    border: none;
     padding: 10px 20px;
     border-radius: 20px;
 }
@@ -40,5 +39,14 @@ button {
 
 #end-game {
     display: none;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#highscores {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

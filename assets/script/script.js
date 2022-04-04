@@ -5,6 +5,10 @@ var introEl = document.querySelector("#intro");
 var quizEl = document.querySelector("#quiz-questions");
 var endGame = document.querySelector("#end-game");
 var scoreEl = document.querySelector("#score");
+var initialsEl = document.querySelector("#initials");
+var subButtonEl = document.querySelector("#submit");
+var highscoreEl = document.querySelector("#highscores");
+var highscoreListEl = document.querySelector("#entered-highscores");
 
 var questNumEl = document.querySelector("#questions-asked");
 var questEl = document.querySelector("#question");
@@ -90,7 +94,6 @@ function countdown() {
         }
         timeLeft--;
     }, 1000);
-    displayHighscore();
 };
 
 startEl.addEventListener("click", function() {
@@ -161,7 +164,7 @@ function gradeQuestion(answer) {
     if(correctAns == answer) {
         score++;
     } else {
-        timeLeft = timeLeft - 5;
+        timeLeft = timeLeft - 10;
     };
 
     if(currentQuiz.length != 0) {
@@ -175,9 +178,29 @@ function gradeQuestion(answer) {
 function gameOver() {
     quizEl.setAttribute("style", "display: none");
     scoreEl.textContent = ("Score: " + score);
-    endGame.setAttribute("style", "display: initial");
+    endGame.setAttribute("style", "display: flex");
 };
 
-function displayHighscore() {
+subButtonEl.addEventListener("click", function() {
+    if(initialsEl.value != "") {
+        var storeScore = {
+            initals: initialsEl.value,
+            highScore: score
+        };
+        localStorage.setItem("pastScores", JSON.stringify(storeScore));
+        initialsEl.value = "";
+        endGame.setAttribute("style", "display: none");
+        displayHighscore();
+    } else {
+        alert("Please enter some text");
+    };
+});
 
+function displayHighscore() {
+    highscoreListEl.innerHTML = "";
+    var li = document.createElement("li");
+    var currentListScore = JSON.parse(localStorage.getItem('pastScores'));
+    li.textContent = ("1. " + currentListScore.initals + " - " + currentListScore.highScore);
+    highscoreListEl.appendChild(li);
+    highscoreEl.setAttribute("style", "display: flex");
 };
