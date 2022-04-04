@@ -16,6 +16,8 @@ var ans1El = document.querySelector("#ans-one");
 var ans2El = document.querySelector("#ans-two");
 var ans3El = document.querySelector("#ans-three");
 var ans4El = document.querySelector("#ans-four");
+var restartButton = document.querySelector("#restart");
+var clearButton = document.querySelector("#clear");
 
 var questionsAsked;
 var score = 0;
@@ -23,6 +25,8 @@ var correctAns;
 var unusedButtons = [];
 var gameOn = false;
 var timeLeft;
+
+var allScores = [];
 
 var quiz = [
     {
@@ -183,11 +187,8 @@ function gameOver() {
 
 subButtonEl.addEventListener("click", function() {
     if(initialsEl.value != "") {
-        var storeScore = {
-            initals: initialsEl.value,
-            highScore: score
-        };
-        localStorage.setItem("pastScores", JSON.stringify(storeScore));
+        var newInitials = initialsEl.value;
+        addToHighscore(newInitials);
         initialsEl.value = "";
         endGame.setAttribute("style", "display: none");
         displayHighscore();
@@ -196,11 +197,62 @@ subButtonEl.addEventListener("click", function() {
     };
 });
 
+
+/*
+ * Stores the new score being added into the local Storage
+ */
+function addToHighscore(newInitials) {
+    var newScore = {
+        highscore: score,
+        initials: newInitials
+    };
+    var toStore = JSON.parse(localStorage.getItem('pastScores'));
+    if(toStore == null) {
+        toStore = [];
+    }
+    if(toStore.length == 0) {
+        toStore[0] = newScore;
+    } else {
+        toStore[toStore.length] = newScore;
+    }
+    localStorage.setItem("pastScores", JSON.stringify(toStore));
+};
+
+/*
+ * This is what builds the list that displays the highscore list to the user
+ */
 function displayHighscore() {
+    // First make sure the list is empty so that if this isn't the first time called then we don't have a duplicate list
     highscoreListEl.innerHTML = "";
-    var li = document.createElement("li");
-    var currentListScore = JSON.parse(localStorage.getItem('pastScores'));
-    li.textContent = ("1. " + currentListScore.initals + " - " + currentListScore.highScore);
-    highscoreListEl.appendChild(li);
+
+    //now we get the list of scores from the local storage
+    var currentListScore = JSON.parse(localStorage.getItem("pastScores"));
+
+    //run through a for loop getting each past score and making a li to add to ul
+    for(var i = 0; i < currentListScore.length; i++) {
+        highscoreListEl.appendChild(buildLi(currentListScore[i].initials, currentListScore[i].highscore, (i + 1)));
+    }
+
+    //display the highscore section to the user
     highscoreEl.setAttribute("style", "display: flex");
 };
+
+
+/*
+ * This will return a new li that we can add to the list
+ */
+function buildLi(initials, highscore, spot) {
+    var li = document.createElement("li");
+    li.textContent = (spot + ". " + initials + " - " + highscore);
+    return li;
+}
+
+/*
+ * Clears the local storage of past scores
+ */
+clearButton.addEventListener("click", function() {
+    //sets up an empty array and sets past scores to that empty array
+    var emptyArray = [];
+    localStorage.setItem("pastScores", JSON.stringify(emptyArray));
+    displayHighscore();
+});
