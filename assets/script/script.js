@@ -81,6 +81,56 @@ var quiz = [
         question: "Why do we use the alt attribute in img tags?",
         correctAnswer: "If for whatever reason the user can't see the image, we can explain in words",
         incorrectAnswer: ["So that the image has background text", "For the programmer to know what the image is about", "For styling purposes"]
+    },
+    {
+        question: "What does && mean in a conditional statement?",
+        correctAnswer: "and",
+        incorrectAnswer: ["or", "between", "fixed"]
+    },
+    {
+        question: "In css how would you add margin to just the top of the element",
+        correctAnswer: "margin-top",
+        incorrectAnswer: ["margin", "margin-above", "margin-below"]
+    },
+    {
+        question: "Which is not an example of a semantic html tag",
+        correctAnswer: "div",
+        incorrectAnswer: ["section", "header", "aside"]
+    },
+    {
+        question: "What tag would you use to put an image on your webpage",
+        correctAnswer: "img",
+        incorrectAnswer: ["image", "photo", "drawing"]
+    },
+    {
+        question: "What attribute would you give to an img tag to point to your picture?",
+        correctAnswer: "src",
+        incorrectAnswer: ["href", "location", "picture"]
+    },
+    {
+        question: "What attribute would make your text bold?",
+        correctAnswer: "font-weight",
+        incorrectAnswer: ["thickness", "font-style", "font-decoration"]
+    },
+    {
+        question: "What attribute would you use to underline your text?",
+        correctAnswer: "text-decoration",
+        incorrectAnswer: ["font-style", "font-weight", "font-underneath"]
+    },
+    {
+        question: "How long would a while(true) loop go for?",
+        correctAnswer: "forever",
+        incorrectAnswer: ["one time", "until you call while.stop", "until you make while(false)"]
+    },
+    {
+        question: "What does javascript end every statement with?",
+        correctAnswer: ";",
+        incorrectAnswer: [":", ",", "/"]
+    },
+    {
+        question: "What array method would you use to figure out if an element is in an array?",
+        correctAnswer: "includes",
+        incorrectAnswer: ["contains", "isIn", "has"]
     }
 ];
 
@@ -118,7 +168,7 @@ function countdown() {
  */
 startEl.addEventListener("click", function() {
     //time that is given to take the quiz
-    timeLeft = 30;
+    timeLeft = 45;
     questionsAsked = 0;
     //copies the quiz questions into a different array of objects so that we can have
     //multiple quizzes without reloading the page
